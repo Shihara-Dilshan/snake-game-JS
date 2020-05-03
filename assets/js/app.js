@@ -3,11 +3,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const squares = document.querySelectorAll(".grid div");
   const scoreBoard = document.querySelector("#scoreBoard");
 
+  /*
+  
   squares.forEach((element, index) => {
     let cre = document.createElement("h6");
     cre.innerHTML = index;
     element.appendChild(cre);
   });
+
+  */
 
   const width = 10;
   let currentIndex = 0; //snake head start at first div in the grid
