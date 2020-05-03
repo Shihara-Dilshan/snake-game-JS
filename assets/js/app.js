@@ -3,11 +3,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const squares = document.querySelectorAll(".grid div");
   const scoreBoard = document.querySelector("#scoreBoard");
 
+  squares.forEach((element, index) => {
+    let cre = document.createElement("h6");
+    cre.innerHTML = index;
+    element.appendChild(cre);
+  });
+
   const width = 10;
   let currentIndex = 0; //snake head start at first div in the grid
   let appleIndex = 0; //apple position start at first div in the grid
   let currentSnake = [2, 1, 0]; // 2 = head, 1 = body , 0 = tail
-  let direction = 1;
+  let direction = width;
   let score = 0;
   let speed = 0.9;
   let intervalTime = 0;
@@ -28,8 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
       currentIndex = 0;
       currentSnake.forEach((index) => {
         squares[index].classList.add("snake");
-        interval = setInterval(moveOutcomes, intervalTime);
       });
+      interval = setInterval(moveOutcomes, intervalTime);
     });
   }
 
@@ -50,12 +56,19 @@ document.addEventListener("DOMContentLoaded", () => {
     squares[tail].classList.remove("snake");
     currentSnake.unshift(currentSnake[0] + direction);
 
-    if (squares[currentSnake[0].classList].contains("apple")) {
+    if (squares[currentSnake[0]].classList.contains("apple")) {
       squares[currentSnake[0]].classList.remove("apple");
       squares[tail].classList.add("snake");
       currentSnake.push(tail);
       //randomApple();
+      score++;
+      scoreBoard.innerHTML = score;
+      clearInterval(interval);
+      intervalTime = intervalTime * speed;
+      interval = setInterval(moveOutcomes, intervalTime);
     }
+
+    squares[currentSnake[0]].classList.add("snake");
   }
 
   document.addEventListener("keyup", (event) => {
@@ -63,12 +76,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (event.keyCode === 39) {
       direction = 1; //if user press right arrow btn ahead 1 time
+      console.log("pressed");
     } else if (event.keyCode === 38) {
       direction = -width; //if user press up arrow btn go back 10 times
+      console.log("pressed");
     } else if (event.keyCode === 37) {
       direction = -1; //if user press left arrow btn go back 1 time
-    } else if (event.target === 40) {
+      console.log("pressed");
+    } else if (event.keyCode === 40) {
       direction = width; //if user press down arrow btn go ahead 10 times
+      console.log("pressed");
     }
   });
+
+  btn.addEventListener("click", startGame);
 });
